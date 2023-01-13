@@ -10,6 +10,11 @@ class SearchImage extends ContentComponent {
 
   // a keresett fajta képeinek lekérése a dog API-ról (https://dog.ceo/dog-api/):
   async getImages(dogBreed) {
+    // handling upper case characters in user input (conslole.log for testing):
+    // console.log(dogBreed);
+    dogBreed = dogBreed.toLowerCase();
+    // console.log(dogBreed);
+
     // kezelni kell az 1 és 2 szóból álló fajták keresését:
     dogBreed = dogBreed.split(' ');
     let urlString;
