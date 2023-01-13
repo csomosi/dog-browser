@@ -1,7 +1,7 @@
 import '../css/listBreedsComponent.css';
 import ContentComponent from '../contentComponent/contentComponent.js';
 
-class ListBreeds extends ContentComponent {
+class listBreeds extends ContentComponent {
   constructor() {
     super();
     this.render();
@@ -15,10 +15,9 @@ class ListBreeds extends ContentComponent {
     const data = await response.json();
     return data.message;
   }
-
   /**
    * displays a single breed
-   * @param {string} breedName - name of the breed
+   * @param {string} breedName name of the breed
    */
   createListItem(breedName) {
     const item = document.createElement('div');
@@ -26,15 +25,15 @@ class ListBreeds extends ContentComponent {
     item.textContent = breedName;
     document.querySelector('#content').appendChild(item);
   }
-
   /**
    * displays the list of breeds
-   * @param {object} breedList - object containing the list of breeds
+   * @param {Object} breedList - object containing the list of breeds
    */
   displayList(breedList) {
+    // for (let ... in...) ciklus arra való, hogy egy object-en menjünk végig:
     for (let breed in breedList) {
       if (breedList[breed].length !== 0) {
-        // if the breed has sub-breeds
+        // ha van alfaj:
         for (const subBreed of breedList[breed]) {
           this.createListItem(`${subBreed} ${breed}`);
         }
@@ -47,16 +46,15 @@ class ListBreeds extends ContentComponent {
   render() {
     const button = document.createElement('button');
     button.classList.add('list-button');
-    button.textContent = 'List Breeds';
+    button.textContent = 'List breeds';
     button.addEventListener('click', () => {
       this.clearContent();
       this.getFullList()
         .then((breedList) => {
-          //        👇 short circuit evaluation
           breedList && this.displayList(breedList);
         })
         .catch((error) => {
-          this.displayError('Error listing breeds :( please try again later.');
+          this.displayError('Error listing breeds');
           console.log(error);
         });
     });
@@ -64,4 +62,4 @@ class ListBreeds extends ContentComponent {
   }
 }
 
-export default ListBreeds;
+export default listBreeds;
