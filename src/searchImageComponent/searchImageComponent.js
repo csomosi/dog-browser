@@ -40,7 +40,7 @@ class SearchImage extends ContentComponent {
   displayImage(imageList) {
     const image = document.createElement('img');
     image.src = imageList[Math.floor(Math.random() * imageList.length)];
-    this.clearContent();
+    // this.clearContent();
     this.clearErrors();
     document.querySelector('#content').appendChild(image);
   }
@@ -50,6 +50,7 @@ class SearchImage extends ContentComponent {
     <form class="dog-search">
       <span class="search-icon"></span>
       <input type="text" id="dogSearchInput">
+      <input type="text" id="imageNumberInput" placeholder="1">
       <button type="submit">Search</button>
     </form>
    `;
@@ -62,6 +63,16 @@ class SearchImage extends ContentComponent {
       event.preventDefault();
       // az input field értékét kiszedjük egy változóba:
       const searchTerm = document.querySelector('#dogSearchInput').value;
+      // query the number from input field and convert it with Number function and Math.floor function:
+      let count = Math.floor(Number(document.querySelector('#imageNumberInput').value));
+      // number will be 1 if input field is empty or is NaN:
+      if (!count) {
+        count = 1;
+      } else if (isNaN(count)) {
+        count = 1;
+      } else {
+      }
+
       // hibakezelés, ha nincs beírva semmi, akkor meghívunk egy metódust:
       if (!searchTerm) {
         this.displayError('Please enter a search term!');
@@ -72,7 +83,10 @@ class SearchImage extends ContentComponent {
         .then((imageList) => {
           // hibakezelés, ha nem megfelelő fajtát írt a keresőbe:
           if (imageList) {
-            this.displayImage(imageList);
+            this.clearContent();
+            for (let i = 1; i < count + 1; i++) {
+              this.displayImage(imageList);
+            }
           } else {
             this.displayError('Breed not found! Please try to list breeds first.');
           }
