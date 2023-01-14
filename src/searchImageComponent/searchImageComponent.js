@@ -44,12 +44,13 @@ class SearchImage extends ContentComponent {
     const classes = image.classList;
     classes.add('lazy');
     image.src = preloading;
-
     image.dataset.src = imageList[Math.floor(Math.random() * imageList.length)];
 
     // this.clearContent();
     this.clearErrors();
+    var lazyLoadInstance = new LazyLoad({});
     document.querySelector('#content').appendChild(image);
+    lazyLoadInstance.update();
   }
 
   render() {
