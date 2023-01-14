@@ -1,5 +1,7 @@
 import '../css/searchImageComponent.css';
 import ContentComponent from '../contentComponent/contentComponent.js';
+import LazyLoad from 'vanilla-lazyload';
+import preloading from '../img/preloading.gif';
 
 class SearchImage extends ContentComponent {
   constructor() {
@@ -39,7 +41,12 @@ class SearchImage extends ContentComponent {
   // random kép megjelenítése egy img html element létrehohzásával:
   displayImage(imageList) {
     const image = document.createElement('img');
-    image.src = imageList[Math.floor(Math.random() * imageList.length)];
+    const classes = image.classList;
+    classes.add('lazy');
+    image.src = preloading;
+
+    image.dataset.src = imageList[Math.floor(Math.random() * imageList.length)];
+
     // this.clearContent();
     this.clearErrors();
     document.querySelector('#content').appendChild(image);
