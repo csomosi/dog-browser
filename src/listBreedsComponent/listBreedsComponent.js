@@ -1,6 +1,8 @@
 import '../css/listBreedsComponent.css';
 import ContentComponent from '../contentComponent/contentComponent.js';
 
+let existingList = false;
+
 class listBreeds extends ContentComponent {
   constructor() {
     super();
@@ -8,12 +10,21 @@ class listBreeds extends ContentComponent {
   }
 
   async getFullList() {
-    const response = await fetch('https://dog.ceo/api/breeds/list/all');
-    if (!response.ok) {
-      throw new Error('API response error');
+    // this if statement is examining if breedlist is already fetched and stored. If not, it fetches:
+    if (!existingList) {
+      const response = await fetch('https://dog.ceo/api/breeds/list/all');
+      if (!response.ok) {
+        throw new Error('API response error');
+      }
+      const data = await response.json();
+      existingList = data.message;
+      localStorage.setItem('existingList', JSON.stringify(existingList));
+      return existingList;
+      // if yes, it uses local storage:
+    } else {
+      existingList = JSON.parse(localStorage.getItem('existingList'));
+      return existingList;
     }
-    const data = await response.json();
-    return data.message;
   }
   /**
    * displays a single breed
