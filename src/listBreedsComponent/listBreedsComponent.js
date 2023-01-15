@@ -52,6 +52,14 @@ class listBreeds extends ContentComponent {
         this.createListItem(breed);
       }
     }
+    //  when user clicks on any breed-list-item:
+    let elements = document.querySelectorAll('.breed-list-item');
+
+    elements.forEach((item) => {
+      item.addEventListener('click', (event) => {
+        this.setSearchTerm(item);
+      });
+    });
   }
 
   render() {
